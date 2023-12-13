@@ -1,0 +1,4 @@
+• Project Name: Blog API Project
+• Poject type: API creation and its integration with Frondend 
+• Description: In this Blog API project, the task was to create an API which serves "Blog posts" to users alongwith 
+services like updating the post, deleting a post. And then integrate the API with the custome made local frontend.
