@@ -48,7 +48,7 @@ app.get("/posts", (req, res) => {
 //CHALLENGE 2: GET a specific post by id
 app.get("/posts/:id", (req, res) => {
   const reqId = req.params.id;
-  const postFound = posts.find((iterm) => iterm.id == reqId);
+  const postFound = posts.find((item) => item.id == reqId);
   if (!postFound) {
     return res.status(404).json({ message: "Post not found" });
   }
@@ -56,16 +56,43 @@ app.get("/posts/:id", (req, res) => {
 });
 
 //CHALLENGE 3: POST a new post
-app.post("/posts", (req,res) => {
-console.log(req.body);
-const newPost = { id: lastId + 1, title: req.body.title, 
-content: req.body.content, author: req.body.author, date: Date()};
-posts.push(newPost);
-res.send(posts);
+app.post("/posts", (req, res) => {
+  console.log(req.body);
+  const newPost = {
+    id: lastId + 1, title: req.body.title,
+    content: req.body.content, author: req.body.author, date: new Date()
+  };
+  posts.push(newPost);
+  res.send(posts);
 });
 //CHALLENGE 4: PATCH a post when you just want to update one parameter
+app.patch("/posts/:id", (req, res) => {
+  const reqId = req.params.id;
+  const postFound = posts.find((item) => item.id == reqId);
 
+  if (postFound.title == req.body.title &
+    postFound.content == req.body.content &
+    postFound.author == req.body.author) {
+    console.log("No change");
+  } else {
+    postFound.title = req.body.title;
+    postFound.content = req.body.content;
+    postFound.author = req.body.author
+    console.log("The post has been updated");
+  }
+  res.send(posts);
+});
 //CHALLENGE 5: DELETE a specific post by providing the post id.
+app.delete("/posts/:id", (req, res) => {
+  const reqId = req.params.id;
+  const postFound = posts.find((item) => item.id == reqId);
+  if (postFound) {
+    posts = posts.filter(function(item) {
+      return item !== postFound;
+  })
+  }
+  res.send(posts);
+});
 
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}`);

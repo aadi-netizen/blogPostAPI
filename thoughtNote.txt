@@ -18,4 +18,59 @@ The task is to create logic for the API server to handle several requests from t
 • Data could be examined by logging req.body and then could be tapped from the same.
 • Now tapped data is push (stored) in the storage.
 
- 
+♦ Patch request 
+
+• Client sends updated data within reqBody, tap the data as above and check whether it has been updated or not.
+  If there is a change then update the state of the change variable/parameter.
+• post and patch reqests urls cannot be accessed from browser url bar as
+  rather only get request could be accessed from it.
+• A route may have different type of requests(put,post,get,delete) although
+  it cannot have the same type of request twice.
+
+♦ Delete request
+
+ • deleteMethod-parameter: { delete-route: asYouDefine, callBackFxn: "function to delete items" }
+ • Methods to delete items from an array: 
+   
+   At first find the index of the item/items to be deleted using "indexOf(item)" method
+1. Array's SPLICE method (coulld delete multiple items)
+
+   • syntax: splice(start, deleteCount, item1, item2, /* …, */ itemN) 
+   • Return value: An array of deleted items;
+
+   const array = [2, 5, 9];
+   console.log(array);
+
+   const index = array.indexOf(5);
+   if (index > -1) { // only splice array when item is found
+  array.splice(index, 1); // 2nd parameter means remove one item only
+   }
+
+   // array = [2, 9]
+   console.log(array);
+
+• Using splice() method to add items at a specific index
+   Remove 0 (zero) elements before index 2, and insert "drum" and "guitar"
+
+   
+   const myFish = ["angel", "clown", "mandarin", "sturgeon"];
+   const removed = myFish.splice(2, 0, "drum", "guitar");
+
+   // myFish is ["angel", "clown", "drum", "guitar", "mandarin", "sturgeon"]
+   // removed is [], no elements removed
+
+2. Array's FILTER method (could delete multiple items)
+
+   • syntax: filter(callbackFn, thisArg)
+   • Return value
+     A shallow copy of the given array containing just the elements that pass the test. 
+     If no elements pass the test, an empty array is returned.
+   let forDeletion = [2, 3, 5]
+
+   let arr = [1, 2, 3, 4, 5, 3]
+
+   arr = arr.filter(item => !forDeletion.includes(item))
+   // !!! Read below about array.includes(...) support !!!
+
+   console.log(arr)
+   // [ 1, 4 ]
